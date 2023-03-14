@@ -1,0 +1,121 @@
+<head>
+    <link rel="stylesheet" href="./css/content.css">
+
+    <link rel="stylesheet" href="../../../../themify-icons/demo-files/demo.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<div id="content">
+    <div class="card text-center">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="true" id="Beverages" href="/products/1">Beverages</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="false" id="Condiments" href="/products/2">Condiments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="false" id="Confections" href="/products/3">Confections</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="false" id="Dairy Products" href="/products/4">Dairy Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="false" id="Grains/Cereals" href="/products/5">Grains/Cereals</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="false" id="Meat/Poultry" href="/products/6">Meat/Poultry
+                        <span class="ti-download"></span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="false" id="Produce" href="/products/7">Produce</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="false" id="Seafood" href="/products/8">Seafood</a>
+                </li>
+            </ul>
+        </div>
+
+        
+        <div class="row" id="card-body">
+            {{#each products}}
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{this.ProductName}}</h5>
+                        <p class="card-text">Unit Price: {{this.UnitPrice}}</p>
+                        <p class="card-text">Units In Stock: {{this.UnitsInStock}}</p>
+                        <p><label for="quantity">Amount: </label>
+                        <input type="text" id="quantity" class="quantity-{{this.ProductID}}" style="width: 60px;" value="1">
+                        </p>
+                        <button class="addToStore" class="btn btn-primary order order" id="{{this.ProductID}}">Order</button>
+                    </div>
+                </div>
+            </div>
+            {{/each }}
+        </div>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link"></a>
+            </li>
+            {{#each arrPage}}
+            <li class="page-item"><a class="page-link page-current" href="?page={{this}}">{{this}}</a></li>
+            {{/each}}
+            <li class="page-item">
+                <a class="page-link"></a>
+            </li>
+        </ul>
+    </nav>
+
+    <script>
+        $(() => {
+            $("ul li a").click(function () {
+                $("ul li a")
+                    .removeClass("active")
+                    .css("aria-current", false);
+
+                $(this)
+                    .addClass("active")
+                    .css("aria-current", true);
+            });
+        });
+
+    </script>
+
+
+<script>
+    $(() => {
+        $(".addToStore").click(function () {
+            var proID = $(this).attr("id");
+            var idQuantity = ".quantity-" + proID;
+            console.log("IdQuantity: ", idQuantity);
+            var quantity = $(idQuantity).val();
+            console.log("Quantity: ", quantity);
+            var packet = $("#packet").text() || 0;
+
+                var dataJS = JSON.stringify({
+                    proID: proID,
+                    packet: packet,
+                    quantity: quantity,
+                 });
+                let fetchData = {
+                    method: "POST",
+                    body: dataJS,
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                }
+                    fetch('/order', fetchData)
+                        .then((res) => { 
+                            return res.json();
+                        })
+                        .then((rs) => {
+                           console.log(rs);
+                           $("#packet").text(rs.packet)
+                        });
+        })
+    })
+</script>

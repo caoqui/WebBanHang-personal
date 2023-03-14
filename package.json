@@ -1,0 +1,29 @@
+{
+  "name": "webbanhang",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"nodemon src/serverShop.js\" \"nodemon src/serverAuth_HTTPS.js\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-handlebars": "^6.0.7",
+    "express-session": "^1.17.3",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.0",
+    "nodemon": "^2.0.20",
+    "passport": "^0.6.0",
+    "passport-google": "^0.3.0",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7",
+    "pg-promise": "^11.2.0",
+    "session": "^0.1.0"
+  }
+}

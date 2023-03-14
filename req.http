@@ -1,0 +1,7 @@
+POST https://localhost:20560/user/jwt
+
+###
+
+
+POST https://localhost:20560/user/access
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJuYW1lIjoiY2FvcXVpIiwicGFzc3dvcmQiOiIxMjMzMjFvayJ9LCJpYXQiOjE2NzY2OTExMDgsImV4cCI6MTY3NjY5MTEyOH0.mNf9ZGtqpcQNUDWldsuV1c_E5j3y3hsOhVVUOhzRaBU

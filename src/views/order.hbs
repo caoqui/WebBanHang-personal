@@ -1,0 +1,60 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+    {{#each productsOrder}}
+    <tr>
+      <th scope="row" class="index">{{@index}}</th>
+      <td>{{this.ProductName}}</td>
+      <td>{{this.UnitPrice}}</td>
+      <td>{{this.Quantity}}</td>
+      <td><button class="deleteOrder" id="{{ProductID}}">x</button></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<script>
+  $(document).ready(function () {
+
+    $(".index").load(function () {
+      let i = $(this).text() + 1;
+      alert(i);
+    })
+  });
+</script>
+
+<script>
+  $(() => {
+
+    $(".deleteOrder").click(function () {
+      var proId = $(this).attr("id");
+      var dataJS = JSON.stringify({
+        proId: proId
+      });
+
+      //delete in frontend
+      $(this).closest("tr").remove();
+
+      let fetchData = {
+        method: "POST",
+        body: dataJS,
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      };
+      //console.log(proname);
+      fetch("/order/handle/delete/"+ proId, fetchData)
+        .then((res) => {
+          return res.json();
+        })
+    })
+  })
+</script>
